@@ -1,0 +1,25 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "T:/Develop/Expressif/esp-idf/components/bootloader/subproject",
+    "build_dir":          "T:/Document/python/esptool/test-code/vertify/build/bootloader",
+    "config_file":        "T:/Document/python/esptool/test-code/vertify/sdkconfig",
+    "config_defaults":    "",
+    "bootloader_elf":     "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "v5.0.1-464-gef4b1b7704",
+    "target":             "esp32c3",
+    "rev":                "",
+    "min_rev":            "3",
+    "max_rev":            "99",
+    "phy_data_partition": "",
+    "monitor_baud" :      "115200",
+    "monitor_toolprefix": "riscv32-esp-elf-",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "T:/Develop/Expressif/esp-idf/components/efuse/Kconfig;T:/Develop/Expressif/esp-idf/components/esp_common/Kconfig;T:/Develop/Expressif/esp-idf/components/esp_hw_support/Kconfig;T:/Develop/Expressif/esp-idf/components/esp_system/Kconfig;T:/Develop/Expressif/esp-idf/components/freertos/Kconfig;T:/Develop/Expressif/esp-idf/components/hal/Kconfig;T:/Develop/Expressif/esp-idf/components/log/Kconfig;T:/Develop/Expressif/esp-idf/components/newlib/Kconfig;T:/Develop/Expressif/esp-idf/components/soc/Kconfig;T:/Develop/Expressif/esp-idf/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "T:/Develop/Expressif/esp-idf/components/bootloader/Kconfig.projbuild;T:/Develop/Expressif/esp-idf/components/esp_app_format/Kconfig.projbuild;T:/Develop/Expressif/esp-idf/components/esp_rom/Kconfig.projbuild;T:/Develop/Expressif/esp-idf/components/esptool_py/Kconfig.projbuild;T:/Develop/Expressif/esp-idf/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp_app_format", "esp_common", "esp_hw_support", "esp_rom", "esp_system", "esptool_py", "freertos", "hal", "log", "main", "micro-ecc", "newlib", "partition_table", "riscv", "soc", "spi_flash", "" ],
+    "build_component_paths" : [ "T:/Develop/Expressif/esp-idf/components/bootloader", "T:/Develop/Expressif/esp-idf/components/bootloader_support", "T:/Develop/Expressif/esp-idf/components/efuse", "T:/Develop/Expressif/esp-idf/components/esp_app_format", "T:/Develop/Expressif/esp-idf/components/esp_common", "T:/Develop/Expressif/esp-idf/components/esp_hw_support", "T:/Develop/Expressif/esp-idf/components/esp_rom", "T:/Develop/Expressif/esp-idf/components/esp_system", "T:/Develop/Expressif/esp-idf/components/esptool_py", "T:/Develop/Expressif/esp-idf/components/freertos", "T:/Develop/Expressif/esp-idf/components/hal", "T:/Develop/Expressif/esp-idf/components/log", "T:/Develop/Expressif/esp-idf/components/bootloader/subproject/main", "T:/Develop/Expressif/esp-idf/components/bootloader/subproject/components/micro-ecc", "T:/Develop/Expressif/esp-idf/components/newlib", "T:/Develop/Expressif/esp-idf/components/partition_table", "T:/Develop/Expressif/esp-idf/components/riscv", "T:/Develop/Expressif/esp-idf/components/soc", "T:/Develop/Expressif/esp-idf/components/spi_flash", "" ],
+    "debug_prefix_map_gdbinit": ""
+}

@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+T:/Document/python/esptool/test-code/test/build/CMakeFiles/bootloader
+T:/Document/python/esptool/test-code/test/build/CMakeFiles/bootloader.rule
+T:/Document/python/esptool/test-code/test/build/CMakeFiles/bootloader-complete.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+T:/Document/python/esptool/test-code/test/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

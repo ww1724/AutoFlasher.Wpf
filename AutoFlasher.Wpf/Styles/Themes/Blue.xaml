@@ -1,0 +1,55 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <SolidColorBrush x:Key="ThemeColor" Color="{DynamicResource BlueColor}"/>
+
+
+    <SolidColorBrush x:Key="ColorGrayA" Color="#fff"/>
+    <SolidColorBrush x:Key="ColorGray9" Color="#E1E1E1"/>
+    <SolidColorBrush x:Key="ColorGray8" Color="#C8C8C8"/>
+    <SolidColorBrush x:Key="ColorGray7" Color="#AFAFAF"/>
+    <SolidColorBrush x:Key="ColorGray6" Color="#969696"/>
+    <SolidColorBrush x:Key="ColorGray5" Color="#7D7D7D"/>
+    <SolidColorBrush x:Key="ColorGray4" Color="#646464"/>
+    <SolidColorBrush x:Key="ColorGray3" Color="#484848"/>
+    <SolidColorBrush x:Key="ColorGray2" Color="#323232"/>
+    <SolidColorBrush x:Key="ColorGray1" Color="#191919"/>
+    <SolidColorBrush x:Key="ColorGray0" Color="#000"/>
+
+
+    <Color x:Key="BoxShadowColor">#333</Color>
+    <SolidColorBrush x:Key="DefaultTextColor" Color="#313131"/>
+    <SolidColorBrush x:Key="InverseTextColor" Color="#fff"/>
+    <SolidColorBrush x:Key="DefaultBgColor" Color="#f2f2f2"/>
+    <SolidColorBrush x:Key="BgColor2" Color="#d1d1d1"/>
+    <SolidColorBrush x:Key="BgColor3" Color="#b0b0b0"/>
+    <SolidColorBrush x:Key="CardContentBgColor" Color="#F4F4F0"/>
+
+    <Color x:Key="PinkColor">#ed6ea0</Color>
+    <SolidColorBrush x:Key="PinkColorBrush" Color="#ed6ea0"/>
+    <Color x:Key="RedColor">#e9546b</Color>
+    <SolidColorBrush x:Key="RedColorBrush" Color="#e9546b"/>
+    <Color x:Key="PurpleColor">#9d5b8b</Color>
+    <SolidColorBrush x:Key="PurpleColorBrush" Color="#9d5b8b"/>
+    <Color x:Key="BlueColor">#38a1db</Color>
+    <SolidColorBrush x:Key="BlueColorBrush" Color="#38a1db"/>
+    <Color x:Key="YellowColor">#eab700</Color>
+    <SolidColorBrush x:Key="YellowColorBrush" Color="#eab700"/>
+    <Color x:Key="GreenColor">#0a7426</Color>
+    <SolidColorBrush x:Key="GreenColorBrush" Color="#0a7426"/>
+    <Color x:Key="OrangeColor">#ec8c69</Color>
+    <SolidColorBrush x:Key="OrangeColorBrush" Color="#ec8c69"/>
+
+    <Color x:Key="DataGridHeaderBgColor">#EAEAEA</Color>
+    <SolidColorBrush x:Key="DataGridHeaderBgColorBrush" Color="{DynamicResource DataGridHeaderBgColor}"/>
+    <Color x:Key="DataGridCellBgColor">#ffffff</Color>
+    <SolidColorBrush x:Key="DataGridCellBgColorBrush" Color="{DynamicResource DataGridCellBgColor}"/>
+    <Color x:Key="DataGridSelectedBgColor">#F0F0F0</Color>
+    <SolidColorBrush x:Key="DataGridSelectedBgColorBrush" Color="{DynamicResource DataGridSelectedBgColor}"/>
+
+
+    <Style TargetType="Button">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+</ResourceDictionary>

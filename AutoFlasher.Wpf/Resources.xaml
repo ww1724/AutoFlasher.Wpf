@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:AutoFlasher.Wpf.Converters">
+    <converters:FlashState2ColorConverter x:Key="FlashState2ColorConverter"/>
+    <converters:FlashRecordState2ColorConverter x:Key="FlashRecordState2ColorConverter" />
+    <converters:Style1ArcConverter x:Key="Style1ArcConverter" />
+    <converters:FlashRecordState2StringConverter x:Key="FlashRecordState2StringConverter" />
+</ResourceDictionary>

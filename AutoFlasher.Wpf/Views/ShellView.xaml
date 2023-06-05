@@ -91,7 +91,7 @@
                     <Grid>
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left">
-                            <TextBlock Text="&#xe64f;"/>
+                            <!--<TextBlock Text="&#xe64f;"/>-->
                             <TextBlock Text="AutoFlasher"></TextBlock>
                         </StackPanel>
 
@@ -814,9 +814,11 @@
                                                                     DockPanel.Dock="Bottom">
                                                             <Button Content="开始自动烧录"
                                                                     Style="{StaticResource PrimaryButtonStyle}"
+                                                                    IsEnabled="{Binding IsAutoFlashing, Converter={StaticResource ReverseBoolConverter}}"
                                                                     cal:Message.Attach="StartAutoFlash" />
                                                             <Button Content="停止自动烧录"
                                                                     Margin="5 0 0 0"
+                                                                    IsEnabled="{Binding IsAutoFlashing}"
                                                                     cal:Message.Attach="StopAutoFlash" />
                                                             <TextBlock Text="&#xe8fc;"
                                                                        FontSize="18"
@@ -996,7 +998,7 @@
                                                                                 </StackPanel>
                                                                             </Grid>
                                                                             <StackPanel>
-                                                                                <StackPanel Orientation="Horizontal"
+                                                                                <!--<StackPanel Orientation="Horizontal"
                                                                                             Margin="5"
                                                                                             Width="225">
                                                                                     <TextBlock Text="串口号"
@@ -1004,6 +1006,19 @@
                                                                                     <ComboBox Width="150"
                                                                                               SelectedItem="{Binding ComPortName}"
                                                                                               ItemsSource="{Binding DataContext.AvailablePorts, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                                                                </StackPanel>-->
+                                                                                <StackPanel Orientation="Horizontal"
+                                                                                            Margin="5"
+                                                                                            Width="225">
+                                                                                    <TextBlock Text="{Binding ComPortName}"
+                                                                                               Margin="5 5 20 5" />
+                                                                                    <ComboBox Width="150"
+                                                                                              SelectedValue="{Binding PortType}"
+                                                                                              DisplayMemberPath="Key"
+                                                                                              
+                                                                                              SelectedValuePath="Value"
+                                                                                              ItemsSource="{Binding Source={x:Static lh:AutoFlashHelper.RecordTypes}}"/>
+                                                                                    
                                                                                 </StackPanel>
                                                                                 <StackPanel Orientation="Horizontal"
                                                                                             Margin="5">

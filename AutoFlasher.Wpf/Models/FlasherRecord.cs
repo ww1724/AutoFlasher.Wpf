@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using AutoFlasher.Wpf.Helpers;
+using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +20,15 @@ namespace AutoFlasher.Wpf.Models
         Erase_Success = 7,
     }
 
+
+
     public class FlasherRecord : PropertyChangedBase
     {
-
-
-        public static Dictionary<string, string> StateWithString = new Dictionary<string, string>()
+        public static Dictionary<string, string> StateWithString = new()
         {
-            { "Idle", "等待" }, {"Flashing", "烧录中" }, { "Success", "烧录成功" }, { "Error", "错误" }, 
+            { "Idle", "等待" }, {"Flashing", "烧录中" }, { "Success", "烧录成功" }, { "Error", "错误" },
             { "Stop", "停止" }, {"Vertify", "校验中"}, {"Erasing", "擦除中"}, { "Erase_Success", "擦除成功"},
         };
-
 
         public FlasherRecord() { }
 
@@ -52,6 +52,7 @@ namespace AutoFlasher.Wpf.Models
             set { stateText = value; NotifyOfPropertyChange(); }
         }
 
+        public int PortType { get => portType; set { portType = value; NotifyOfPropertyChange(); } }
 
         private string comPortName;
 
@@ -119,7 +120,7 @@ namespace AutoFlasher.Wpf.Models
 
 
         private double successPercent = 100;
-        
+
         public double SuccessPercent
         {
             get { return successPercent; }
@@ -147,10 +148,11 @@ namespace AutoFlasher.Wpf.Models
         public double StopTime
         {
             get { return stopTime; }
-            set { stopTime = value;  }
+            set { stopTime = value; }
         }
 
         private double averageTime = 0;
+        private int portType = -1;
 
         public double AverageTime
         {

@@ -7,7 +7,15 @@ namespace AutoFlasher.Wpf.Helpers
     {
         Idle,
         WaitingStartSignal,
-        WaitingFlashFinished,
+        ReadyToFlash,
+        Flashing,
+        Finished,
+        Stop
+    }
+
+    public enum PortType
+    {
+        PLC, Left, Right
     }
 
     public class AutoFlashHelper
@@ -18,6 +26,10 @@ namespace AutoFlasher.Wpf.Helpers
             { AutoFlashState.WaitingStartSignal, "等待启动信号" },
         };
 
+        public static Dictionary<string, int> RecordTypes = new()
+        {
+            { "PLC", 0 } , { "左烧录", 1}, { "右烧录", 2 }
+        };
 
         public AutoFlashHelper()
         {

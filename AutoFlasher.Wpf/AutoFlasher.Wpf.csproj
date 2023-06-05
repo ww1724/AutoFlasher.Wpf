@@ -23,4 +23,8 @@
     <PackageReference Include="Zoranof.UI.Wpf" Version="0.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Zoranof.UI.Wpf\src\Zoranof.UI.Wpf\Zoranof.UI.Wpf.csproj" />
+  </ItemGroup>
+
 </Project>

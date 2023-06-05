@@ -21,6 +21,7 @@ using System.Windows.Threading;
 
 namespace AutoFlasher.Wpf.ViewModels
 {
+
     public class ShellViewModel : Screen, IViewModel
     {
         private Timer Timer { get; set; }
@@ -37,8 +38,15 @@ namespace AutoFlasher.Wpf.ViewModels
             AvailablePorts = new ObservableCollection<string>();
 
             _ = ReloadConfig();
+            Application.Current.Dispatcher.UnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
+            {
+                LoggerService.Error(e.Exception.ToString());
+                MessageBox.Show("Application Error\r\n" + e.Exception.ToString());
+
+            };
         }
 
+        public SerialPort ModbusSerial { get; set; }
 
         #region Private
         private List<Task> FlashTasks = new List<Task>();
@@ -75,10 +83,12 @@ namespace AutoFlasher.Wpf.ViewModels
         }
         #endregion
 
-
         // view models
         #region State
         public bool IsAllAvailable { get => isAllAvailable; set { isAllAvailable = value; NotifyOfPropertyChange(); } }
+
+        FlasherRecord LeftRecord { get; set; }
+        FlasherRecord RightRecord { get; set; }
         #endregion
 
         #region Config
@@ -120,7 +130,16 @@ namespace AutoFlasher.Wpf.ViewModels
         #region Variable
         public bool IsAutoFlashing { get => isAutoFlashing; set { isAutoFlashing = value; NotifyOfPropertyChange(); } }
 
-        public AutoFlashState AutoState { get => autoState; set { autoState = value; NotifyOfPropertyChange(); } }
+        public AutoFlashState AutoState { get => autoState; set { OnAutoStateChanged(value, autoState); autoState = value; NotifyOfPropertyChange(); ; } }
+
+        private void OnAutoStateChanged(AutoFlashState newVal, AutoFlashState oldVal)
+        {
+            // 烧录完成收尾
+            if (oldVal == AutoFlashState.Flashing && newVal == AutoFlashState.Finished)
+            {
+                autoState = AutoFlashState.WaitingStartSignal;
+            } 
+        }
 
         public ObservableCollection<FirewareItem> FirewareList { get => firewareList; set { firewareList = value; NotifyOfPropertyChange(); } }
 
@@ -136,11 +155,119 @@ namespace AutoFlasher.Wpf.ViewModels
             IsAutoFlashing = true;
 
             AutoState = AutoFlashState.WaitingStartSignal;
+            foreach(var record in Records)
+            {
+                
+            }
+            WaitToFlash();
+        }
+
+        public async void WaitToFlash()
+        {
+            SerialPort serialPort = new();
+            serialPort.BaudRate = 19200;
+            try
+            {
+                serialPort.PortName = records.Where(x => x.PortType == 0).First().ComPortName;
+                if (serialPort.PortName == null)
+                    throw new Exception();
+            } catch(Exception ex)
+            {
+                MessageBox.Show("串口未配置");
+                AutoState = AutoFlashState.Idle;
+                IsAutoFlashing = false;
+                return;
+            }
+            
+            serialPort.Parity = Parity.Even;
+            serialPort.StopBits = StopBits.One;
+            serialPort.DataBits = 8;
+            serialPort.Handshake = Handshake.None;
+
+            serialPort.DataReceived += SerialPort_DataReceived;
+            serialPort.ErrorReceived += SerialPort_ErrorReceived;
+
+            byte[] buffer = new byte[] { 0x01, 0x01, 0x50, 0x00, 0x00, 0x01, 0xEC, 0xCA };
+            serialPort.Open();
+            await Task.Run(() =>
+            {
+                while (autoState == AutoFlashState.WaitingStartSignal)
+                {   
+                    serialPort.Write(buffer, 0, buffer.Length);
+                    Thread.Sleep(100);
+                }
+            });
+            serialPort.Close();
+            if (autoState == AutoFlashState.ReadyToFlash)
+                ReadyToFlash();
+        }
+
+        public void ReadyToFlash()
+        {
+            var leftRecord = Records.Where(x => x.PortType == 1).FirstOrDefault();
+            var rightRecord = Records.Where(x => x.PortType == 2).FirstOrDefault();
+            if (leftRecord == null || rightRecord == null)
+            {
+                MessageBox.Show("烧录串口未配置好");
+                AutoState = AutoFlashState.Idle;
+                IsAutoFlashing = false;
+                return;
+            }
+            StartFlashToRecord(leftRecord);
+            StartFlashToRecord(rightRecord);
+        }
+
+        public async void FinishFlash()
+        {
+
+        }
+
+
+        private void SerialPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        {
+            
+        }
+
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort serialPort = sender as SerialPort;
+            byte data = 0;
+            int len = 0;
+            int bufsize = serialPort.BytesToRead;
+            string a = "";
+            while (len < bufsize)
+            {
+                data = (byte)serialPort.ReadByte();
+                len++;
+                a += Convert.ToString(data, 16).ToUpper();
+                a += " "; 
+            }
+            serialPort.DiscardInBuffer();
+            byte commandType =  Convert.ToByte(a.Split(" ")[1], 16);
+            //{
+            //    //StartFlashToRecord(records.FirstOrDefault());
+            //    autoState = AutoFlashState.Idle;
+            //}
+
+            if (a.Split(" ")[1] == "1")
+            {
+                // 当前为等待开始
+                if (AutoState == AutoFlashState.WaitingStartSignal)
+                {
+                    if (a.Split(' ')[3] == "1")
+                    {
+                        AutoState = AutoFlashState.ReadyToFlash;
+                    }
+                }
+
+            }
+                
         }
 
         public void StopAutoFlash()
         {
             IsAutoFlashing = false;
+            AutoState = AutoFlashState.Stop;
         }
 
         public void StartAllFlash()
@@ -189,6 +316,7 @@ namespace AutoFlasher.Wpf.ViewModels
             if (firewareList.Count == 0)
             {
                 MessageBox.Show("请先导入固件");
+                if (IsAutoFlashing) IsAutoFlashing = false;
                 return;
             }
             if (record.IsAvailable)
@@ -640,7 +768,17 @@ namespace AutoFlasher.Wpf.ViewModels
                             Dictionary<string, System.Action<string[]>> patternActions = new()
                             {
                                 { "Writing at.*?(\\d+) %",  new Action<string[]>( values => { record.Progress = Convert.ToInt32(values[1]); }) },
-                                { "Hard resetting via RTS pin.*?", new Action<string[]>( values => { if(commandType == "write") record.State = FlashRecordState.Success; } ) },
+                                { "Hard resetting via RTS pin.*?", new Action<string[]>( 
+                                    values => { 
+                                        if(commandType == "write") 
+                                        { 
+                                            record.State = FlashRecordState.Success; 
+                                            if (isAutoFlashing)
+                                            {
+                                                AutoState = AutoFlashState.Finished;
+                                            }
+                                        } 
+                                    }) },
                                 { "Chip erase completed successfully in .*?s", new Action<string[]> ( values => record.State = FlashRecordState.Erase_Success) },
                                 { "A fatal error occurred.*?", new Action<string[]> (values => record.State = FlashRecordState.Error) }
                             };
@@ -676,7 +814,7 @@ namespace AutoFlasher.Wpf.ViewModels
                         var errroMessage = errorString.ToString();
                         if (errroMessage != "\r\n" && errroMessage != "")
                         {
-                            throw new ApplicationException(errroMessage);
+                            MessageBox.Show(errroMessage + "串口烧录异常");
                         }
                         switch (commandType)
                         {
@@ -745,12 +883,7 @@ namespace AutoFlasher.Wpf.ViewModels
 
             ChangeThemeColor(ThemeColor);
 
-            Application.Current.Dispatcher.UnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
-            {
-                LoggerService.Error(e.Exception.ToString());
-                MessageBox.Show("Application Error\r\n" + e.Exception.ToString() );
 
-            };
 
             Timer = new Timer((object state) =>
             {
@@ -758,9 +891,5 @@ namespace AutoFlasher.Wpf.ViewModels
             }, null, 0, 200);
         }
         #endregion
-
-
-
-
     }
 }

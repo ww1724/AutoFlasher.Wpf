@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Zoranof.UI.Wpf;component/Themes/Blue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Zoranof.UI.Wpf;component/Themes/Light.xaml"/>
 
                 <ResourceDictionary>
                     <local:Bootstrapper x:Key="AppBootstrapper"/>

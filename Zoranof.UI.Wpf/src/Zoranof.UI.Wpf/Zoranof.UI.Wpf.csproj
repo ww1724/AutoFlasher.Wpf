@@ -19,11 +19,6 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <PackageReference Include="NModbus" Version="3.0.78" />
-  </ItemGroup>
-
   <ItemGroup>
     <Resource Include="Resources\iconfont.ttf" />
     <Resource Include="Resources\lxwk.ttf" />

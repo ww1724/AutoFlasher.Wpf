@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:helpers="clr-namespace:Zoranof.UI.Wpf.Helpers;assembly=Zoranof.UI.Wpf"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:lh="clr-namespace:AutoFlasher.Wpf.Helpers"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewmodels="clr-namespace:AutoFlasher.Wpf.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
@@ -75,7 +73,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState, Converter={StaticResource WindowMaximized2MarginConverter}}">
+    <Grid Margin="8">
         <Border BorderBrush="{DynamicResource PurpleColorBrush}"
                 BorderThickness="2">
             <Grid>
@@ -291,8 +289,7 @@
                                             <StackPanel Orientation="Horizontal"
                                                         DockPanel.Dock="Top"
                                                         Margin="10">
-                                                <Button Style="{StaticResource PrimaryButtonStyle}"
-                                                        Content="保存配置"
+                                                <Button Content="保存配置"
                                                         cal:Message.Attach="RestoreConfig" />
                                                 <Button Margin="5 0 0 0"
                                                         Content="读取配置"
@@ -444,15 +441,9 @@
                                                         Grid.Row="1"
                                                         Orientation="Horizontal"
                                                         HorizontalAlignment="Left">
-                                                <Button helpers:IconHelper.Icon="&#xe60b;"
-                                                        helpers:ButtonHelper.CornerRadius="8"
-                                                        Style="{StaticResource PrimaryButtonStyle}"
-                                                        cal:Message.Attach="ImportFirewareAction"
+                                                <Button cal:Message.Attach="ImportFirewareAction"
                                                         Content="导入固件" />
-                                                <Button helpers:IconHelper.Icon="&#xe64e;"
-                                                        helpers:ButtonHelper.CornerRadius="8"
-                                                        Style="{StaticResource DefaultButtonStyle}"
-                                                        Margin="5 0 0 0"
+                                                <Button Margin="5 0 0 0"
                                                         Content="组合固件" 
                                                         cal:Message.Attach="StartCombineBinAction"/>
 
@@ -474,7 +465,6 @@
                                                                             </Grid.ColumnDefinitions>
 
                                                                             <Border Grid.Column="0"
-                                                                                    BorderBrush="{DynamicResource BgColor2}"
                                                                                     BorderThickness="1">
                                                                                 <Grid VerticalAlignment="Center"
                                                                                       HorizontalAlignment="Center">
@@ -483,7 +473,6 @@
                                                                             </Border>
                                                                             <Border Grid.Column="1"
                                                                                     MaxWidth="317"
-                                                                                    BorderBrush="{DynamicResource BgColor2}"
                                                                                     BorderThickness="1">
                                                                                 <Grid>
                                                                                     <ContentPresenter />
@@ -500,10 +489,7 @@
                                                                             <Border Grid.Column="3"
                                                                                     BorderBrush="{DynamicResource BgColor2}"
                                                                                     BorderThickness="1">
-                                                                                <Button helpers:IconHelper.Icon="&#xe661;"
-                                                                                        Height="30"
-                                                                                        Style="{StaticResource TextButtonStyle}" 
-                                                                                        cal:Message.Attach="RemoveFireware($datacontext)"/>
+                                                                                <Button cal:Message.Attach="RemoveFireware($datacontext)"/>
                                                                             </Border>
                                                                         </Grid>
                                                                     </ControlTemplate>
@@ -734,7 +720,6 @@
                                                             Margin="5 2"
                                                             Style="{StaticResource PrimaryButtonStyle}" />-->
                                                     <Button Content="手动烧录"
-                                                            Style="{StaticResource PrimaryButtonStyle}"
                                                             Margin="5 2"
                                                             cal:Message.Attach="StartAllFlash" />
 
@@ -771,7 +756,7 @@
                                                                     Margin="0 10">
                                                             <StackPanel Orientation="Horizontal"
                                                                         Margin="5 5">
-                                                                <TextBlock Text="开始烧录信号" />
+                                                                <TextBlock Text="开始烧录信号  M" />
                                                                 <TextBox Text="{Binding StartSignal}"
                                                                          VerticalContentAlignment="Center"
                                                                          TextAlignment="Center"
@@ -779,19 +764,19 @@
                                                                          Margin="5 0 0 0" />
                                                             </StackPanel>
 
-                                                            <StackPanel Orientation="Horizontal"
+                                                            <!--<StackPanel Orientation="Horizontal"
                                                                         Margin="5 5">
-                                                                <TextBlock Text="中断烧录信号" />
+                                                                <TextBlock Text="中断烧录信号  M" />
                                                                 <TextBox Text="{Binding StopSignal}"
                                                                          VerticalContentAlignment="Center"
                                                                          TextAlignment="Center"
                                                                          Width="40"
                                                                          Margin="5 0 0 0" />
-                                                            </StackPanel>
+                                                            </StackPanel>-->
 
                                                             <StackPanel Orientation="Horizontal"
                                                                         Margin="5 5">
-                                                                <TextBlock Text="烧录完成信号" />
+                                                                <TextBlock Text="烧录完成信号  M" />
                                                                 <TextBox Text="{Binding FinishSignal}"
                                                                          Width="40"
                                                                          Margin="5 0 0 0"
@@ -801,7 +786,7 @@
 
                                                             <StackPanel Orientation="Horizontal"
                                                                         Margin="5 5">
-                                                                <TextBlock Text="烧录结果起始位" />
+                                                                <TextBlock Text="烧录结果起始位  M" />
                                                                 <TextBox Text="{Binding FlashStateSignalStartIndex}"
                                                                          Width="40"
                                                                          Margin="5 0 0 0"
@@ -813,7 +798,6 @@
                                                         <StackPanel Orientation="Horizontal"
                                                                     DockPanel.Dock="Bottom">
                                                             <Button Content="开始自动烧录"
-                                                                    Style="{StaticResource PrimaryButtonStyle}"
                                                                     IsEnabled="{Binding IsAutoFlashing, Converter={StaticResource ReverseBoolConverter}}"
                                                                     cal:Message.Attach="StartAutoFlash" />
                                                             <Button Content="停止自动烧录"

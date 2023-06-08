@@ -16,7 +16,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Zoranof.UI.Wpf;component/Themes/Blue.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Zoranof.UI.Wpf;component/Themes/Light.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Zoranof.UI.Wpf;component/Resources.xaml"/>
-
+                <ResourceDictionary Source="pack://application:,,,/Zoranof.UI.Wpf;component/DefaultStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AutoFlasher.Wpf;component/Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 

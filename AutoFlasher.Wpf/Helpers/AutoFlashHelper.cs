@@ -28,7 +28,7 @@ namespace AutoFlasher.Wpf.Helpers
 
         public static Dictionary<string, int> RecordTypes = new()
         {
-            { "PLC", 0 } , { "左烧录", 1}, { "右烧录", 2 }
+            { "无效", -1 }, { "PLC", 0 } , { "左烧录", 1}, { "右烧录", 2 }
         };
 
         public AutoFlashHelper()

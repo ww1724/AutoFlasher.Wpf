@@ -36,10 +36,11 @@ namespace AutoFlasher.Wpf.ViewModels
 
         IModbusSerialMaster PlcMaster { get; set; }
         
-
         SerialPort PlcPort { get; set; }
 
         private static ModbusFactory ModbusFactory;
+
+        public Dictionary<string, int> ComRecordTypePairs { get; set; }
 
         public ShellViewModel()
         {
@@ -352,6 +353,8 @@ namespace AutoFlasher.Wpf.ViewModels
 
         public void ScanComs()
         {
+            if (ComRecordTypePairs == null) return;
+
             string[] ports = SerialPort.GetPortNames();
             AvailablePorts = new ObservableCollection<string>(ports);
             List<FlasherRecord> flashToDelete = new List<FlasherRecord>();
@@ -382,6 +385,7 @@ namespace AutoFlasher.Wpf.ViewModels
                             BaudRate = defaultBaud,
                             Logs = "",
                             Progress = 0,
+                            PortType = ComRecordTypePairs.ContainsKey(port) ? ComRecordTypePairs[port] : -1
                         });
                     });
                 }
@@ -436,7 +440,7 @@ namespace AutoFlasher.Wpf.ViewModels
 
                     ThemeColor = ConfigObject.ThemeColor;
 
-
+                    ComRecordTypePairs = ConfigObject.ComRecordTypePairs.ToObject<Dictionary<string, int>>();
                     #endregion
                 });
             }
@@ -453,6 +457,14 @@ namespace AutoFlasher.Wpf.ViewModels
                 try
                 {
                     var tempFireList = firewareList.ToList().ToDictionary(x => x.FirewareFile, x => x.Offset);
+                    ComRecordTypePairs = new Dictionary<string, int>();
+                    foreach(var item in Records)
+                    {
+                        if (item.PortType != -1)
+                        {
+                            ComRecordTypePairs.Add(item.ComPortName, item.PortType);
+                        }
+                    }
                     dynamic config = new
                     {
                         ChipType,
@@ -472,7 +484,8 @@ namespace AutoFlasher.Wpf.ViewModels
 
                         ThemeColor,
 
-                        FirewareList = tempFireList
+                        FirewareList = tempFireList,
+                        ComRecordTypePairs
                     };
                     string json = JsonConvert.SerializeObject(config);
 
@@ -838,16 +851,14 @@ namespace AutoFlasher.Wpf.ViewModels
         {
             base.OnViewLoaded(view);
 
-            ScanComs();
+            //ScanComs();
 
             ChangeThemeColor(ThemeColor);
-
-
 
             Timer = new Timer((object state) =>
             {
                 ScanComs();
-            }, null, 0, 200);
+            }, null, 0, 1000);
         }
         #endregion
    
@@ -885,114 +896,166 @@ namespace AutoFlasher.Wpf.ViewModels
         {
             while (IsAutoFlashing)
             {
-                WaitToFlash();
-                ReadyToFlash();
-                WaitFlashFinished();
-                FinishFlash();
+                while (true && IsAutoFlashing)
+                {
+                    bool toStart = false;
+                    try
+                    {
+                        toStart = PlcMaster.ReadCoils(1, Convert.ToUInt16(StartSignal), 1)[0];
+                        Thread.Sleep(200);
+                        Console.WriteLine($"Start Signal Is {toStart}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        LoggerService.Error(ex.Message);
+                        AutoState = AutoFlashState.Idle;
+                        IsAutoFlashing = false;
+                    }
+
+                    if (toStart)
+                    {
+                        AutoState = AutoFlashState.Flashing;
+                        break;
+                    }
+                }
+
+                var leftRecord = Records.Where(x => x.PortType == 1).FirstOrDefault();
+                var rightRecord = Records.Where(x => x.PortType == 2).FirstOrDefault();
+                if (leftRecord == null || rightRecord == null)
+                {
+                    MessageBox.Show("烧录串口未配置好");
+                    AutoState = AutoFlashState.Idle;
+                    IsAutoFlashing = false;
+                    return;
+                }
+                StartFlashToRecord(leftRecord);
+                StartFlashToRecord(rightRecord);
+
+                while (IsAutoFlashing)
+                {
+                    if ((leftRecord.State == FlashRecordState.Success || leftRecord.State == FlashRecordState.Error) &&
+                        (rightRecord.State == FlashRecordState.Success || rightRecord.State == FlashRecordState.Error))
+                    {
+                        break;
+                    }
+                }
+
+                bool[] result = { leftRecord.State == FlashRecordState.Success, rightRecord.State == FlashRecordState.Success };
+                PlcMaster.WriteMultipleCoils(1, Convert.ToUInt16(FlashStateSignalStartIndex), result);
+                Thread.Sleep(500);
+                PlcMaster.WriteSingleCoil(1, Convert.ToUInt16(FinishSignal), true);
+
+                AutoState = AutoFlashState.WaitingStartSignal;
+
+                //WaitToFlash();
+                //ReadyToFlash();
+                //WaitFlashFinished();
+                //FinishFlash();
             }
         }
 
-        public async void WaitToFlash()
-        {
+        //public async void WaitToFlash()
+        //{
 
-            while (true && IsAutoFlashing)
-            {
-                bool toStart = false;
-                try
-                {
-                    toStart = PlcMaster.ReadCoils(1, Convert.ToUInt16(StartSignal), 1)[0];
-                    Thread.Sleep(2000);
-                    Console.WriteLine($"Start Signal Is {toStart}");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    LoggerService.Error(ex.Message);
-                }
+        //    while (true && IsAutoFlashing)
+        //    {
+        //        bool toStart = false;
+        //        try
+        //        {
+        //            toStart = PlcMaster.ReadCoils(1, Convert.ToUInt16(StartSignal), 1)[0];
+        //            Thread.Sleep(200);
+        //            Console.WriteLine($"Start Signal Is {toStart}");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //            LoggerService.Error(ex.Message);
+        //        }
 
-                if (toStart)
-                {
-                    AutoState = AutoFlashState.Flashing;
-                    break;
-                }
-            }
-            //SerialPort serialPort = new();
-            //serialPort.BaudRate = 19200;
-            //try
-            //{
-            //    serialPort.PortName = records.Where(x => x.PortType == 0).First().ComPortName;
-            //    if (serialPort.PortName == null)
-            //        throw new Exception();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("串口未配置");
-            //    AutoState = AutoFlashState.Idle;
-            //    IsAutoFlashing = false;
-            //    return;
-            //}
+        //        if (toStart)
+        //        {
+        //            AutoState = AutoFlashState.Flashing;
+        //            break;
+        //        }
+        //    }
+        //    //SerialPort serialPort = new();
+        //    //serialPort.BaudRate = 19200;
+        //    //try
+        //    //{
+        //    //    serialPort.PortName = records.Where(x => x.PortType == 0).First().ComPortName;
+        //    //    if (serialPort.PortName == null)
+        //    //        throw new Exception();
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    MessageBox.Show("串口未配置");
+        //    //    AutoState = AutoFlashState.Idle;
+        //    //    IsAutoFlashing = false;
+        //    //    return;
+        //    //}
 
-            //serialPort.Parity = Parity.Even;
-            //serialPort.StopBits = StopBits.One;
-            //serialPort.DataBits = 8;
-            //serialPort.Handshake = Handshake.None;
+        //    //serialPort.Parity = Parity.Even;
+        //    //serialPort.StopBits = StopBits.One;
+        //    //serialPort.DataBits = 8;
+        //    //serialPort.Handshake = Handshake.None;
 
-            //serialPort.DataReceived += SerialPort_DataReceived;
-            //serialPort.ErrorReceived += SerialPort_ErrorReceived;
+        //    //serialPort.DataReceived += SerialPort_DataReceived;
+        //    //serialPort.ErrorReceived += SerialPort_ErrorReceived;
 
-            //byte[] buffer = new byte[] { 0x01, 0x01, 0x50, 0x00, 0x00, 0x01, 0xEC, 0xCA };
-            //serialPort.Open();
-            ////await Task.Run(() =>
-            ////{
-            //    while (autoState == AutoFlashState.WaitingStartSignal)
-            //    {
-            //        serialPort.Write(buffer, 0, buffer.Length);
-            //        Thread.Sleep(1000);
-            //    }
-            ////});
-            //serialPort.Close();
-            ////if (autoState == AutoFlashState.ReadyToFlash)
-            ////    ReadyToFlash();
-        }
+        //    //byte[] buffer = new byte[] { 0x01, 0x01, 0x50, 0x00, 0x00, 0x01, 0xEC, 0xCA };
+        //    //serialPort.Open();
+        //    ////await Task.Run(() =>
+        //    ////{
+        //    //    while (autoState == AutoFlashState.WaitingStartSignal)
+        //    //    {
+        //    //        serialPort.Write(buffer, 0, buffer.Length);
+        //    //        Thread.Sleep(1000);
+        //    //    }
+        //    ////});
+        //    //serialPort.Close();
+        //    ////if (autoState == AutoFlashState.ReadyToFlash)
+        //    ////    ReadyToFlash();
+        //}
 
-        public void ReadyToFlash()
-        {
-            //var leftRecord = Records.Where(x => x.PortType == 1).FirstOrDefault();
-            //var rightRecord = Records.Where(x => x.PortType == 2).FirstOrDefault();
-            //if (leftRecord == null || rightRecord == null)
-            //{
-            //    MessageBox.Show("烧录串口未配置好");
-            //    AutoState = AutoFlashState.Idle;
-            //    IsAutoFlashing = false;
-            //    return;
-            //}
-            //StartFlashToRecord(leftRecord);
-            //StartFlashToRecord(rightRecord);
-        }
+        //public void ReadyToFlash()
+        //{
+        //    //var leftRecord = Records.Where(x => x.PortType == 1).FirstOrDefault();
+        //    //var rightRecord = Records.Where(x => x.PortType == 2).FirstOrDefault();
+        //    //if (leftRecord == null || rightRecord == null)
+        //    //{
+        //    //    MessageBox.Show("烧录串口未配置好");
+        //    //    AutoState = AutoFlashState.Idle;
+        //    //    IsAutoFlashing = false;
+        //    //    return;
+        //    //}
+        //    //StartFlashToRecord(leftRecord);
+        //    //StartFlashToRecord(rightRecord);
+        //}
 
-        public void WaitFlashFinished()
-        {
-            var leftRecord = Records.Where(x => x.PortType == 1).FirstOrDefault();
-            var rightRecord = Records.Where(x => x.PortType == 2).FirstOrDefault();
-            while (IsAutoFlashing)
-            {
-                if ((leftRecord.State == FlashRecordState.Success || leftRecord.State == FlashRecordState.Error ) &&
-                    (rightRecord.State == FlashRecordState.Success || rightRecord.State == FlashRecordState.Error))
-                {
-                    break;
-                }
-            }
+        //public void WaitFlashFinished()
+        //{
+        //    var leftRecord = Records.Where(x => x.PortType == 1).FirstOrDefault();
+        //    var rightRecord = Records.Where(x => x.PortType == 2).FirstOrDefault();
+        //    while (IsAutoFlashing)
+        //    {
+        //        if ((leftRecord.State == FlashRecordState.Success || leftRecord.State == FlashRecordState.Error ) &&
+        //            (rightRecord.State == FlashRecordState.Success || rightRecord.State == FlashRecordState.Error))
+        //        {
+        //            break;
+        //        }
+        //    }
 
-            bool[] result = { leftRecord.State == FlashRecordState.Success, rightRecord.State == FlashRecordState.Success };
-            PlcMaster.WriteMultipleCoils(1, Convert.ToUInt16(FlashStateSignalStartIndex), result);
-            Thread.Sleep(5);
-            PlcMaster.WriteSingleCoil(1, Convert.ToUInt16(FinishSignal), true);
-        }
+        //    bool[] result = { leftRecord.State == FlashRecordState.Success, rightRecord.State == FlashRecordState.Success };
+        //    PlcMaster.WriteMultipleCoils(1, Convert.ToUInt16(FlashStateSignalStartIndex), result);
+        //    Thread.Sleep(5);
+        //    PlcMaster.WriteSingleCoil(1, Convert.ToUInt16(FinishSignal), true);
+        //}
 
-        public void FinishFlash()
-        {
-            AutoState = AutoFlashState.WaitingStartSignal;
-        }
+        //public void FinishFlash()
+        //{
+        //    AutoState = AutoFlashState.WaitingStartSignal;
+        //}
 
 
 

@@ -8,13 +8,10 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewmodels="clr-namespace:AutoFlasher.Wpf.ViewModels"
         mc:Ignorable="d"
-        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Title="ShellView"
         Height="860"
-        MinHeight="860"
-        Width="1500"
-        MinWidth="1500">
+        Width="900">
 
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="4"
@@ -73,7 +70,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="8">
+    <Grid>
         <Border BorderBrush="{DynamicResource PurpleColorBrush}"
                 BorderThickness="2">
             <Grid>
@@ -96,127 +93,6 @@
                         <Grid HorizontalAlignment="Right"
                               WindowChrome.IsHitTestVisibleInChrome="True">
                             <StackPanel Orientation="Horizontal">
-                                <CheckBox x:Name="ExpandColorPopup"
-                                          Content="&#xe97f;"
-                                          Background="Transparent"
-                                          VerticalAlignment="Stretch"
-                                          Cursor="Hand">
-                                    <CheckBox.Style>
-                                        <Style TargetType="CheckBox">
-                                            <Setter Property="BorderThickness"
-                                                    Value="2" />
-                                            <Setter Property="BorderBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="CheckBox">
-                                                        <Border BorderThickness="{TemplateBinding BorderThickness}"
-                                                                CornerRadius="4"
-                                                                BorderBrush="{TemplateBinding BorderBrush}">
-                                                            <Grid Background="{TemplateBinding Background}">
-                                                                <TextBlock Margin="5 0"
-                                                                           Text="{TemplateBinding Content}"
-                                                                           Foreground="{TemplateBinding Foreground}"
-                                                                           FontFamily="{StaticResource IconFontFamily}"
-                                                                           FontSize="20" />
-                                                            </Grid>
-                                                        </Border>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver"
-                                                                     Value="True">
-                                                                <Setter Property="Foreground"
-                                                                        Value="{DynamicResource ThemeColor}" />
-                                                            </Trigger>
-                                                            <Trigger Property="IsChecked"
-                                                                     Value="True">
-                                                                <Setter Property="BorderBrush"
-                                                                        Value="{DynamicResource ThemeColor}" />
-                                                                <Setter Property="Foreground"
-                                                                        Value="{DynamicResource ThemeColor}" />
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-
-                                        </Style>
-                                    </CheckBox.Style>
-                                </CheckBox>
-                                <Popup AllowsTransparency="True"
-                                       WindowChrome.IsHitTestVisibleInChrome="True"
-                                       IsOpen="{Binding ElementName=ExpandColorPopup, Path=IsChecked}"
-                                       StaysOpen="false">
-                                    <Border Padding="10"
-                                            Background="Transparent"
-                                            MaxWidth="220">
-                                        <Border Background="{DynamicResource DefaultBgColor}"
-                                                CornerRadius="2"
-                                                Padding="10 10"
-                                                WindowChrome.IsHitTestVisibleInChrome="True">
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="选择主题色"
-                                                           FontSize="12" />
-                                                <WrapPanel Margin="0 5">
-                                                    <WrapPanel.Resources>
-                                                        <Style x:Key="ColorPaletteIndicatorStyle"
-                                                               TargetType="Border">
-                                                            <Setter Property="Cursor"
-                                                                    Value="Hand" />
-                                                            <Setter Property="Margin"
-                                                                    Value="5" />
-                                                            <Setter Property="Width"
-                                                                    Value="20" />
-                                                            <Setter Property="Height"
-                                                                    Value="20" />
-                                                            <Setter Property="CornerRadius"
-                                                                    Value="100" />
-                                                            <Style.Triggers>
-                                                                <Trigger Property="IsMouseOver"
-                                                                         Value="True">
-                                                                    <Setter Property="Opacity"
-                                                                            Value="0.6" />
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </WrapPanel.Resources>
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource RedColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Red')]" />
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource PinkColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Pink')]" />
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource BlueColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Blue')]" />
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource PurpleColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Purple')]" />
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource GreenColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Green')]" />
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource OrangeColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Orange')]" />
-                                                    <Border Style="{StaticResource ColorPaletteIndicatorStyle}"
-                                                            Background="{DynamicResource YellowColorBrush}"
-                                                            cal:Message.Attach="[Event MouseUp] = [Action ChangeThemeColor('Yellow')]" />
-                                                </WrapPanel>
-                                                <Grid Margin="5">
-                                                    <TextBlock Text="暗色模式"
-                                                               FontSize="12"
-                                                               HorizontalAlignment="Left" />
-                                                    <CheckBox HorizontalAlignment="Right" />
-                                                </Grid>
-                                            </StackPanel>
-                                            <Border.Effect>
-                                                <DropShadowEffect BlurRadius="6"
-                                                                  ShadowDepth="-5"
-                                                                  Color="{DynamicResource BoxShadowColor}"
-                                                                  Opacity="0.4" />
-                                            </Border.Effect>
-                                        </Border>
-                                    </Border>
-                                </Popup>
 
                                 <Border x:Name="minimizeWindowBtn"
                                         Style="{StaticResource ControlBtnStyle}"
@@ -255,440 +131,10 @@
                 </Border>
 
                 <Border Grid.Row="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="500" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0"
-                                IsEnabled="{Binding IsAllAvailable}"
-                                Padding="0">
-                            <Border Background="{DynamicResource ColorGrayA}"
-                                    BorderBrush="{DynamicResource BgColor3}"
-                                    BorderThickness="0 0 2 0">
-
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="150" />
-                                        <RowDefinition Height="2*" />
-                                        <RowDefinition Height="3*" />
-                                        <RowDefinition Height="50" />
-                                    </Grid.RowDefinitions>
-
-                                    <Border Grid.Row="0"
-                                            BorderThickness="0 0 0 2"
-                                            BorderBrush="{DynamicResource BgColor3}">
-                                        <DockPanel>
-                                            <StackPanel Orientation="Horizontal"
-                                                        DockPanel.Dock="Top"
-                                                        Margin="10 5">
-                                                <TextBlock Text="默认配置" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal"
-                                                        DockPanel.Dock="Top"
-                                                        Margin="10">
-                                                <Button Content="保存配置"
-                                                        cal:Message.Attach="RestoreConfig" />
-                                                <Button Margin="5 0 0 0"
-                                                        Content="读取配置"
-                                                        cal:Message.Attach="ReloadConfig" />
-                                                <Button Margin="5 0 0 0"
-                                                        Content="导入配置文件"
-                                                        cal:Message.Attach="ImportConfig" />
-                                                <Button Margin="5 0 0 0"
-                                                        Content="恢复默认配置"
-                                                        cal:Message.Attach="LoadDefaultConfig" />
-
-                                            </StackPanel>
-                                            <WrapPanel DockPanel.Dock="Top"
-                                                       Margin="10">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="默认波特率" />
-                                                    <ComboBox  Margin="5"
-                                                               Width="100"
-                                                               SelectedItem="{Binding DefaultBaud}"
-                                                               ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.BaudList}}" />
-                                                </StackPanel>
-
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="芯片型号" />
-                                                    <ComboBox Margin="5 0 0 0"
-                                                              ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.ChipTypeList}}"
-                                                              Width="100"
-                                                              SelectedItem="{Binding ChipType}"
-                                                              VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </WrapPanel>
-                                        </DockPanel>
-                                    </Border>
-
-                                    <Border Grid.Row="1"
-                                            Padding="5 0 5 10"
-                                            BorderThickness="0 0 0 2"
-                                            BorderBrush="{DynamicResource BgColor2}">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto" />
-                                                <RowDefinition Height="auto" />
-                                                <RowDefinition Height="*" />
-                                            </Grid.RowDefinitions>
-
-                                            <Border Margin="5">
-                                                <Grid>
-                                                    <StackPanel Orientation="Horizontal"
-                                                                HorizontalAlignment="Left">
-                                                        <TextBlock Text="&#xe64d;"
-                                                                   FontFamily="{StaticResource IconFontFamily}" />
-                                                        <TextBlock Text="固件配置"
-                                                                   Margin="5 0 0 0" />
-                                                    </StackPanel>
-
-                                                    <Border HorizontalAlignment="Right">
-                                                        <StackPanel>
-                                                            <CheckBox x:Name="FirewareAdvanceConfigBtn"
-                                                                      Content="&#xe653;"
-                                                                      Background="Transparent"
-                                                                      VerticalAlignment="Stretch"
-                                                                      Cursor="Hand">
-                                                                <CheckBox.Style>
-                                                                    <Style TargetType="CheckBox">
-                                                                        <Setter Property="BorderThickness"
-                                                                                Value="2" />
-                                                                        <Setter Property="BorderBrush"
-                                                                                Value="Transparent" />
-                                                                        <Setter Property="Template">
-                                                                            <Setter.Value>
-                                                                                <ControlTemplate TargetType="CheckBox">
-                                                                                    <Border BorderThickness="{TemplateBinding BorderThickness}"
-                                                                                            CornerRadius="4"
-                                                                                            BorderBrush="{TemplateBinding BorderBrush}">
-                                                                                        <Grid Background="{TemplateBinding Background}">
-                                                                                            <TextBlock Margin="5 0"
-                                                                                                       Text="{TemplateBinding Content}"
-                                                                                                       Foreground="{TemplateBinding Foreground}"
-                                                                                                       FontFamily="{StaticResource IconFontFamily}"
-                                                                                                       FontSize="20" />
-                                                                                        </Grid>
-                                                                                    </Border>
-                                                                                    <ControlTemplate.Triggers>
-                                                                                        <Trigger Property="IsMouseOver"
-                                                                                                 Value="True">
-                                                                                            <Setter Property="Foreground"
-                                                                                                    Value="{DynamicResource ThemeColor}" />
-                                                                                        </Trigger>
-                                                                                        <Trigger Property="IsChecked"
-                                                                                                 Value="True">
-                                                                                            <Setter Property="BorderBrush"
-                                                                                                    Value="{DynamicResource ThemeColor}" />
-                                                                                            <Setter Property="Foreground"
-                                                                                                    Value="{DynamicResource ThemeColor}" />
-                                                                                        </Trigger>
-                                                                                    </ControlTemplate.Triggers>
-                                                                                </ControlTemplate>
-                                                                            </Setter.Value>
-                                                                        </Setter>
-
-                                                                    </Style>
-                                                                </CheckBox.Style>
-                                                            </CheckBox>
-                                                            <Popup AllowsTransparency="True"
-                                                                   WindowChrome.IsHitTestVisibleInChrome="True"
-                                                                   IsOpen="{Binding ElementName=FirewareAdvanceConfigBtn, Path=IsChecked}"
-                                                                   StaysOpen="false"
-                                                                   Placement="Left">
-                                                                <Border Padding="10"
-                                                                        Background="Transparent">
-                                                                    <Border Background="{DynamicResource DefaultBgColor}"
-                                                                            CornerRadius="2"
-                                                                            Padding="20 20">
-                                                                        <StackPanel Orientation="Vertical">
-                                                                            <CheckBox Margin="5 0 5 10"
-                                                                                      Content="自动读取Offset"
-                                                                                      IsChecked="{Binding IsAutoParseFirewareOffest}" />
-                                                                            <CheckBox Margin="5 0 5 10"
-                                                                                      Content="导入完整文件名"
-                                                                                      IsChecked="{Binding IsShowFirewareFullName}" />
-                                                                            <StackPanel Orientation="Horizontal"
-                                                                                        Margin="5">
-                                                                                <TextBlock Text="固件名称格式" />
-                                                                                <TextBox Width="300"
-                                                                                         Height="24"
-                                                                                         Margin="5 0"
-                                                                                         Text="{Binding FirewareParseOffsetString}"
-                                                                                         VerticalContentAlignment="Center"
-                                                                                         TextWrapping="NoWrap" />
-
-                                                                            </StackPanel>
-                                                                        </StackPanel>
-                                                                        <Border.Effect>
-                                                                            <DropShadowEffect BlurRadius="6"
-                                                                                              ShadowDepth="-5"
-                                                                                              Color="{DynamicResource BoxShadowColor}"
-                                                                                              Opacity="0.4" />
-                                                                        </Border.Effect>
-
-                                                                    </Border>
-                                                                </Border>
-                                                            </Popup>
-                                                        </StackPanel>
-                                                    </Border>
-                                                </Grid>
-                                            </Border>
-
-                                            <StackPanel Margin="5 0 5 10"
-                                                        Grid.Row="1"
-                                                        Orientation="Horizontal"
-                                                        HorizontalAlignment="Left">
-                                                <Button cal:Message.Attach="ImportFirewareAction"
-                                                        Content="导入固件" />
-                                                <Button Margin="5 0 0 0"
-                                                        Content="组合固件" 
-                                                        cal:Message.Attach="StartCombineBinAction"/>
-
-                                            </StackPanel>
-
-                                            <Border Grid.Row="2">
-                                                <ListBox ItemsSource="{Binding FirewareList}">
-                                                    <ListBox.ItemContainerStyle>
-                                                        <Style TargetType="ListBoxItem">
-                                                            <Setter Property="Template">
-                                                                <Setter.Value>
-                                                                    <ControlTemplate TargetType="ListBoxItem">
-                                                                        <Grid Height="30">
-                                                                            <Grid.ColumnDefinitions>
-                                                                                <ColumnDefinition Width="30" />
-                                                                                <ColumnDefinition Width="*" />
-                                                                                <ColumnDefinition Width="100" />
-                                                                                <ColumnDefinition Width="36" />
-                                                                            </Grid.ColumnDefinitions>
-
-                                                                            <Border Grid.Column="0"
-                                                                                    BorderThickness="1">
-                                                                                <Grid VerticalAlignment="Center"
-                                                                                      HorizontalAlignment="Center">
-                                                                                    <CheckBox IsChecked="{Binding Enable}" />
-                                                                                </Grid>
-                                                                            </Border>
-                                                                            <Border Grid.Column="1"
-                                                                                    MaxWidth="317"
-                                                                                    BorderThickness="1">
-                                                                                <Grid>
-                                                                                    <ContentPresenter />
-                                                                                </Grid>
-                                                                            </Border>
-                                                                            <Border Grid.Column="2"
-                                                                                    BorderBrush="{DynamicResource BgColor2}"
-                                                                                    BorderThickness="1">
-                                                                                <TextBox Text="{Binding Offset}"
-                                                                                         BorderThickness="0"
-                                                                                         VerticalContentAlignment="Center" />
-                                                                            </Border>
-
-                                                                            <Border Grid.Column="3"
-                                                                                    BorderBrush="{DynamicResource BgColor2}"
-                                                                                    BorderThickness="1">
-                                                                                <Button cal:Message.Attach="RemoveFireware($datacontext)"/>
-                                                                            </Border>
-                                                                        </Grid>
-                                                                    </ControlTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Style>
-                                                    </ListBox.ItemContainerStyle>
-                                                    <ListBox.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <Grid>
-                                                                <TextBox Text="{Binding FileName}"
-                                                                         VerticalContentAlignment="Center"
-                                                                         BorderThickness="0" />
-                                                                <TextBox Text="{Binding FirewareFile }"
-                                                                         VerticalContentAlignment="Center"
-                                                                         BorderThickness="0"
-                                                                         Visibility="{Binding Path=DataContext.IsShowFirewareFullName, Mode=OneWay,Converter={StaticResource Bool2VisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ListBox.ItemTemplate>
-                                                </ListBox>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-
-                                    <Border Grid.Row="2"
-                                            Padding="5 0 5 10"
-                                            BorderThickness="0 0 0 2"
-                                            BorderBrush="{DynamicResource BgColor2}">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto" />
-                                                <RowDefinition Height="auto" />
-                                                <RowDefinition Height="*" />
-                                            </Grid.RowDefinitions>
-
-                                            <Border Margin="5">
-                                                <Grid>
-                                                    <StackPanel Orientation="Horizontal"
-                                                                HorizontalAlignment="Left">
-                                                        <TextBlock Text="&#xe64d;"
-                                                                   FontFamily="{StaticResource IconFontFamily}" />
-                                                        <TextBlock Text="SpiFlash配置"
-                                                                   Margin="5 0 0 0" />
-                                                    </StackPanel>
-
-                                                    <Border HorizontalAlignment="Right">
-                                                        <StackPanel/>
-                                                    </Border>
-                                                </Grid>
-                                            </Border>
-
-                                            <StackPanel Margin="5 0 5 10"
-                                                        Grid.Row="1"
-                                                        Orientation="Horizontal"
-                                                        HorizontalAlignment="Left">
-                                                <Border Grid.Row="1">
-                                                    <StackPanel Orientation="Horizontal"
-                                                                VerticalAlignment="Center" />
-                                                </Border>
-                                            </StackPanel>
-
-
-                                            <StackPanel Orientation="Vertical"
-                                                        Grid.Row="2">
-                                                <GroupBox Header="Crystal Frequency"
-                                                          Padding="0 10">
-                                                    <ListBox Style="{StaticResource ListBoxBaseStyle}"
-                                                             IsEnabled="{Binding IsAllAvailable}"
-                                                             SelectedItem="{Binding CrystalFrequency}"
-                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.CrystalFrequencyList}}">
-                                                        <ListBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding}" />
-                                                            </DataTemplate>
-                                                        </ListBox.ItemTemplate>
-                                                        <ListBox.ItemContainerStyle>
-                                                            <Style TargetType="ListBoxItem">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="ListBoxItem">
-                                                                            <Grid Margin="5 0"
-                                                                                  Width="80">
-                                                                                <RadioButton Cursor="Hand"
-                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
-                                                                                             GroupName="CrystalFrequencyList">
-                                                                                    <ContentPresenter />
-                                                                                </RadioButton>
-                                                                            </Grid>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </ListBox.ItemContainerStyle>
-                                                    </ListBox>
-                                                </GroupBox>
-                                                <GroupBox Header="Spi Mode"
-                                                          Padding="0 10">
-                                                    <ListBox Style="{StaticResource ListBoxBaseStyle}"
-                                                             SelectedItem="{Binding SpiMode,Mode=TwoWay}"
-                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.SpiModeList}}">
-                                                        <ListBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding}" />
-                                                            </DataTemplate>
-                                                        </ListBox.ItemTemplate>
-                                                        <ListBox.ItemContainerStyle>
-                                                            <Style TargetType="ListBoxItem">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="ListBoxItem">
-                                                                            <Grid Margin="5 0"
-                                                                                  Width="80">
-                                                                                <RadioButton Cursor="Hand"
-                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
-                                                                                             GroupName="SpiModeList">
-                                                                                    <ContentPresenter />
-                                                                                </RadioButton>
-                                                                            </Grid>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </ListBox.ItemContainerStyle>
-                                                    </ListBox>
-                                                </GroupBox>
-                                                <GroupBox Header="Spi Speed"
-                                                          Padding="0 10">
-                                                    <ListBox Style="{StaticResource ListBoxBaseStyle}"
-                                                             SelectedItem="{Binding SpiSpeed}"
-                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.SpiSpeedList}}">
-                                                        <ListBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding}" />
-                                                            </DataTemplate>
-                                                        </ListBox.ItemTemplate>
-                                                        <ListBox.ItemContainerStyle>
-                                                            <Style TargetType="ListBoxItem">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="ListBoxItem">
-                                                                            <Grid Margin="5 0"
-                                                                                  Width="80">
-                                                                                <RadioButton Cursor="Hand"
-                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
-                                                                                             GroupName="SpiSeedList">
-                                                                                    <ContentPresenter />
-                                                                                </RadioButton>
-                                                                            </Grid>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </ListBox.ItemContainerStyle>
-                                                    </ListBox>
-                                                </GroupBox>
-                                                <GroupBox Header="Flash Size"
-                                                          Padding="0 10">
-                                                    <ListBox Style="{StaticResource ListBoxBaseStyle}"
-                                                             SelectedItem="{Binding FlashSize}"
-                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.FlashSizeList}}">
-                                                        <ListBox.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <TextBlock Text="{Binding}" />
-                                                            </DataTemplate>
-                                                        </ListBox.ItemTemplate>
-                                                        <ListBox.ItemContainerStyle>
-                                                            <Style TargetType="ListBoxItem">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="ListBoxItem">
-                                                                            <Grid Margin="5 0"
-                                                                                  Width="80">
-                                                                                <RadioButton Cursor="Hand"
-                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
-                                                                                             GroupName="FlashSizeList">
-                                                                                    <ContentPresenter />
-                                                                                </RadioButton>
-                                                                            </Grid>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Style>
-                                                        </ListBox.ItemContainerStyle>
-                                                    </ListBox>
-                                                </GroupBox>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-
-
-                                </Grid>
-                            </Border>
-                        </Border>
-
-                        <Border Grid.Column="1">
+                    <Border>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="150" />
+                                    <RowDefinition Height="auto" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
                                 </Grid.RowDefinitions>
@@ -700,60 +146,523 @@
 
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="220" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Row="0"
-                                                BorderThickness="0 0 2 2"
-                                                BorderBrush="{DynamicResource BgColor3}">
-                                            <StackPanel VerticalAlignment="Center">
-                                                <WrapPanel Orientation="Horizontal"
-                                                           HorizontalAlignment="Center"
-                                                           Margin="10">
-                                                    <!--<Button Content="扫描串口"
-                                                            cal:Message.Attach="ScanComs"
-                                                            Margin="5 2"
-                                                            Style="{StaticResource PrimaryButtonStyle}" />-->
-                                                    <Button Content="手动烧录"
-                                                            Margin="5 2"
-                                                            cal:Message.Attach="StartAllFlash" />
-
-                                                    <Button Content="停止烧录"
-                                                            Margin="5 2"
-                                                            cal:Message.Attach="StopAllFlash" />
-
-                                                    <Button Content="擦除固件"
-                                                            Margin="5 2"
-                                                            cal:Message.Attach="EraseAllFlash" />
-                                                </WrapPanel>
-                                            </StackPanel>
-                                        </Border>
-
-                                        <Border Grid.Column="1"
-                                                Grid.Row="0">
-                                            <Grid>
-                                                <Border Padding="10 2"
-                                                        Grid.Row="1"
-                                                        BorderBrush="{DynamicResource BgColor3}"
+                                        <Border Grid.Row="0" Padding="15" BorderBrush="{DynamicResource BgColor3}"
                                                         BorderThickness="0 0 2 2">
-                                                    <DockPanel>
-                                                        <StackPanel DockPanel.Dock="Top"
-                                                                    Orientation="Horizontal">
+                                            <Grid>
+                                                <Border 
+                                                        Grid.Row="1"
+                                                        >
+                                                    <StackPanel>
+                                                        <Grid DockPanel.Dock="Top">
                                                             <TextBlock Text="&#xe7d0;"
                                                                        FontSize="20"
                                                                        FontFamily="{StaticResource IconFontFamily}" />
                                                             <TextBlock Text="自动烧录配置"
-                                                                       FontSize="16"
-                                                                       Margin="5 0 0 0" />
-                                                        </StackPanel>
-                                                        <StackPanel DockPanel.Dock="Top"
-                                                                    Orientation="Horizontal"
-                                                                    Margin="0 10">
+                                                                       FontSize="20"
+                                                                       Margin="30 0 0 0" />
+
+                                                            <Border HorizontalAlignment="Right" x:Name="MoreConfog">
+                                                                <StackPanel>
+                                                                    <CheckBox x:Name="MoreConfigBtn"
+                                                                      Content="&#xe653;"
+                                                                      Background="Transparent"
+                                                                      VerticalAlignment="Stretch"
+                                                                      Cursor="Hand">
+                                                                        <CheckBox.Style>
+                                                                            <Style TargetType="CheckBox">
+                                                                                <Setter Property="BorderThickness"
+                                                                                Value="2" />
+                                                                                <Setter Property="BorderBrush"
+                                                                                Value="Transparent" />
+                                                                                <Setter Property="Template">
+                                                                                    <Setter.Value>
+                                                                                        <ControlTemplate TargetType="CheckBox">
+                                                                                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                                                                            CornerRadius="4"
+                                                                                            BorderBrush="{TemplateBinding BorderBrush}">
+                                                                                                <Grid Background="{TemplateBinding Background}">
+                                                                                                    <TextBlock Margin="5 0"
+                                                                                                       Text="{TemplateBinding Content}"
+                                                                                                       Foreground="{TemplateBinding Foreground}"
+                                                                                                       FontFamily="{StaticResource IconFontFamily}"
+                                                                                                       FontSize="45" />
+                                                                                                </Grid>
+                                                                                            </Border>
+                                                                                            <ControlTemplate.Triggers>
+                                                                                                <Trigger Property="IsMouseOver"
+                                                                                                 Value="True">
+                                                                                                    <Setter Property="Foreground"
+                                                                                                    Value="{DynamicResource ThemeColor}" />
+                                                                                                </Trigger>
+                                                                                                <Trigger Property="IsChecked"
+                                                                                                 Value="True">
+                                                                                                    <Setter Property="BorderBrush"
+                                                                                                    Value="{DynamicResource ThemeColor}" />
+                                                                                                    <Setter Property="Foreground"
+                                                                                                    Value="{DynamicResource ThemeColor}" />
+                                                                                                </Trigger>
+                                                                                            </ControlTemplate.Triggers>
+                                                                                        </ControlTemplate>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+
+                                                                            </Style>
+                                                                        </CheckBox.Style>
+                                                                    </CheckBox>
+                                                                    <Popup AllowsTransparency="True"
+                                                                   WindowChrome.IsHitTestVisibleInChrome="True"
+                                                                   IsOpen="{Binding ElementName=MoreConfigBtn, Path=IsChecked}"
+                                                                   StaysOpen="false"
+                                                                   Placement="Left">
+                                                                        <Border Padding="10"
+                                                                        Background="Transparent">
+                                                                            <Border Background="{DynamicResource DefaultBgColor}"
+                                                                            CornerRadius="2"
+                                                                            Padding="20 20">
+                                                                                <Border Grid.Column="0"
+                                IsEnabled="{Binding IsAllAvailable}"
+                                Padding="0">
+                                                                                    <Border Background="{DynamicResource ColorGrayA}"
+                                    BorderBrush="{DynamicResource BgColor3}"
+                                    BorderThickness="0 0 2 0">
+
+
+                                                                                        <Grid>
+                                                                                            <Grid.RowDefinitions>
+                                                                                                <RowDefinition Height="150" />
+                                                                                                <RowDefinition Height="2*" />
+                                                                                                <RowDefinition Height="3*" />
+                                                                                                <RowDefinition Height="50" />
+                                                                                            </Grid.RowDefinitions>
+
+                                                                                            <Border Grid.Row="0"
+                                            BorderThickness="0 0 0 2"
+                                            BorderBrush="{DynamicResource BgColor3}">
+                                                                                                <DockPanel>
+                                                                                                    <StackPanel Orientation="Horizontal"
+                                                        DockPanel.Dock="Top"
+                                                        Margin="10 5">
+                                                                                                        <TextBlock Text="默认配置" />
+                                                                                                    </StackPanel>
+                                                                                                    <StackPanel Orientation="Horizontal"
+                                                        DockPanel.Dock="Top"
+                                                        Margin="10">
+                                                                                                        <Button Content="保存配置"
+                                                        cal:Message.Attach="RestoreConfig" />
+                                                                                                        <Button Margin="5 0 0 0"
+                                                        Content="读取配置"
+                                                        cal:Message.Attach="ReloadConfig" />
+                                                                                                        <Button Margin="5 0 0 0"
+                                                        Content="导入配置文件"
+                                                        cal:Message.Attach="ImportConfig" />
+                                                                                                        <Button Margin="5 0 0 0"
+                                                        Content="恢复默认配置"
+                                                        cal:Message.Attach="LoadDefaultConfig" />
+
+                                                                                                    </StackPanel>
+                                                                                                    <WrapPanel DockPanel.Dock="Top"
+                                                       Margin="10">
+                                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                            <TextBlock Text="默认波特率" />
+                                                                                                            <ComboBox  Margin="5"
+                                                               Width="100"
+                                                               SelectedItem="{Binding DefaultBaud}"
+                                                               ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.BaudList}}" />
+                                                                                                        </StackPanel>
+
+                                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                                            <TextBlock Text="芯片型号" />
+                                                                                                            <ComboBox Margin="5 0 0 0"
+                                                              ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.ChipTypeList}}"
+                                                              Width="100"
+                                                              SelectedItem="{Binding ChipType}"
+                                                              VerticalAlignment="Center" />
+                                                                                                        </StackPanel>
+                                                                                                    </WrapPanel>
+                                                                                                </DockPanel>
+                                                                                            </Border>
+
+                                                                                            <Border Grid.Row="1"
+                                            Padding="5 0 5 10"
+                                            BorderThickness="0 0 0 2"
+                                            BorderBrush="{DynamicResource BgColor2}">
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="auto" />
+                                                                                                        <RowDefinition Height="auto" />
+                                                                                                        <RowDefinition Height="*" />
+                                                                                                    </Grid.RowDefinitions>
+
+                                                                                                    <Border Margin="5">
+                                                                                                        <Grid>
+                                                                                                            <StackPanel Orientation="Horizontal"
+                                                                HorizontalAlignment="Left">
+                                                                                                                <TextBlock Text="&#xe64d;"
+                                                                   FontFamily="{StaticResource IconFontFamily}" />
+                                                                                                                <TextBlock Text="固件配置"
+                                                                   Margin="5 0 0 0" />
+                                                                                                            </StackPanel>
+
+                                                                                                            <Border HorizontalAlignment="Right">
+                                                                                                                <StackPanel>
+                                                                                                                    <CheckBox x:Name="FirewareAdvanceConfigBtn1"
+                                                                      Content="&#xe653;"
+                                                                      Background="Transparent"
+                                                                      VerticalAlignment="Stretch"
+                                                                      Cursor="Hand">
+                                                                                                                        <CheckBox.Style>
+                                                                                                                            <Style TargetType="CheckBox">
+                                                                                                                                <Setter Property="BorderThickness"
+                                                                                Value="2" />
+                                                                                                                                <Setter Property="BorderBrush"
+                                                                                Value="Transparent" />
+                                                                                                                                <Setter Property="Template">
+                                                                                                                                    <Setter.Value>
+                                                                                                                                        <ControlTemplate TargetType="CheckBox">
+                                                                                                                                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                                                                            CornerRadius="4"
+                                                                                            BorderBrush="{TemplateBinding BorderBrush}">
+                                                                                                                                                <Grid Background="{TemplateBinding Background}">
+                                                                                                                                                    <TextBlock Margin="5 0"
+                                                                                                       Text="{TemplateBinding Content}"
+                                                                                                       Foreground="{TemplateBinding Foreground}"
+                                                                                                       FontFamily="{StaticResource IconFontFamily}"
+                                                                                                       FontSize="20" />
+                                                                                                                                                </Grid>
+                                                                                                                                            </Border>
+                                                                                                                                            <ControlTemplate.Triggers>
+                                                                                                                                                <Trigger Property="IsMouseOver"
+                                                                                                 Value="True">
+                                                                                                                                                    <Setter Property="Foreground"
+                                                                                                    Value="{DynamicResource ThemeColor}" />
+                                                                                                                                                </Trigger>
+                                                                                                                                                <Trigger Property="IsChecked"
+                                                                                                 Value="True">
+                                                                                                                                                    <Setter Property="BorderBrush"
+                                                                                                    Value="{DynamicResource ThemeColor}" />
+                                                                                                                                                    <Setter Property="Foreground"
+                                                                                                    Value="{DynamicResource ThemeColor}" />
+                                                                                                                                                </Trigger>
+                                                                                                                                            </ControlTemplate.Triggers>
+                                                                                                                                        </ControlTemplate>
+                                                                                                                                    </Setter.Value>
+                                                                                                                                </Setter>
+
+                                                                                                                            </Style>
+                                                                                                                        </CheckBox.Style>
+                                                                                                                    </CheckBox>
+                                                                                                                    <Popup AllowsTransparency="True"
+                                                                   WindowChrome.IsHitTestVisibleInChrome="True"
+                                                                   IsOpen="{Binding ElementName=FirewareAdvanceConfigBtn, Path=IsChecked}"
+                                                                   StaysOpen="false"
+                                                                   Placement="Left">
+                                                                                                                        <Border Padding="10"
+                                                                        Background="Transparent">
+                                                                                                                            <Border Background="{DynamicResource DefaultBgColor}"
+                                                                            CornerRadius="2"
+                                                                            Padding="20 20">
+                                                                                                                                <StackPanel Orientation="Vertical">
+                                                                                                                                    <CheckBox Margin="5 0 5 10"
+                                                                                      Content="自动读取Offset"
+                                                                                      IsChecked="{Binding IsAutoParseFirewareOffest}" />
+                                                                                                                                    <CheckBox Margin="5 0 5 10"
+                                                                                      Content="导入完整文件名"
+                                                                                      IsChecked="{Binding IsShowFirewareFullName}" />
+                                                                                                                                    <StackPanel Orientation="Horizontal"
+                                                                                        Margin="5">
+                                                                                                                                        <TextBlock Text="固件名称格式" />
+                                                                                                                                        <TextBox Width="300"
+                                                                                         Height="24"
+                                                                                         Margin="5 0"
+                                                                                         Text="{Binding FirewareParseOffsetString}"
+                                                                                         VerticalContentAlignment="Center"
+                                                                                         TextWrapping="NoWrap" />
+
+                                                                                                                                    </StackPanel>
+                                                                                                                                </StackPanel>
+                                                                                                                                <Border.Effect>
+                                                                                                                                    <DropShadowEffect BlurRadius="6"
+                                                                                              ShadowDepth="-5"
+                                                                                              Color="{DynamicResource BoxShadowColor}"
+                                                                                              Opacity="0.4" />
+                                                                                                                                </Border.Effect>
+
+                                                                                                                            </Border>
+                                                                                                                        </Border>
+                                                                                                                    </Popup>
+                                                                                                                </StackPanel>
+                                                                                                            </Border>
+                                                                                                        </Grid>
+                                                                                                    </Border>
+
+                                                                                                    <StackPanel Margin="5 0 5 10"
+                                                        Grid.Row="1"
+                                                        Orientation="Horizontal"
+                                                        HorizontalAlignment="Left">
+                                                                                                        <Button cal:Message.Attach="ImportFirewareAction"
+                                                        Content="导入固件" />
+                                                                                                        <Button Margin="5 0 0 0"
+                                                        Content="组合固件" 
+                                                        cal:Message.Attach="StartCombineBinAction"/>
+
+                                                                                                    </StackPanel>
+
+                                                                                                    <Border Grid.Row="2">
+                                                                                                        <ListBox ItemsSource="{Binding FirewareList}">
+                                                                                                            <ListBox.ItemContainerStyle>
+                                                                                                                <Style TargetType="ListBoxItem">
+                                                                                                                    <Setter Property="Template">
+                                                                                                                        <Setter.Value>
+                                                                                                                            <ControlTemplate TargetType="ListBoxItem">
+                                                                                                                                <Grid Height="30">
+                                                                                                                                    <Grid.ColumnDefinitions>
+                                                                                                                                        <ColumnDefinition Width="30" />
+                                                                                                                                        <ColumnDefinition Width="*" />
+                                                                                                                                        <ColumnDefinition Width="100" />
+                                                                                                                                        <ColumnDefinition Width="36" />
+                                                                                                                                    </Grid.ColumnDefinitions>
+
+                                                                                                                                    <Border Grid.Column="0"
+                                                                                    BorderThickness="1">
+                                                                                                                                        <Grid VerticalAlignment="Center"
+                                                                                      HorizontalAlignment="Center">
+                                                                                                                                            <CheckBox IsChecked="{Binding Enable}" />
+                                                                                                                                        </Grid>
+                                                                                                                                    </Border>
+                                                                                                                                    <Border Grid.Column="1"
+                                                                                    MaxWidth="317"
+                                                                                    BorderThickness="1">
+                                                                                                                                        <Grid>
+                                                                                                                                            <ContentPresenter />
+                                                                                                                                        </Grid>
+                                                                                                                                    </Border>
+                                                                                                                                    <Border Grid.Column="2"
+                                                                                    BorderBrush="{DynamicResource BgColor2}"
+                                                                                    BorderThickness="1">
+                                                                                                                                        <TextBox Text="{Binding Offset}"
+                                                                                         BorderThickness="0"
+                                                                                         VerticalContentAlignment="Center" />
+                                                                                                                                    </Border>
+
+                                                                                                                                    <Border Grid.Column="3"
+                                                                                    BorderBrush="{DynamicResource BgColor2}"
+                                                                                    BorderThickness="1">
+                                                                                                                                        <Button cal:Message.Attach="RemoveFireware($datacontext)"/>
+                                                                                                                                    </Border>
+                                                                                                                                </Grid>
+                                                                                                                            </ControlTemplate>
+                                                                                                                        </Setter.Value>
+                                                                                                                    </Setter>
+                                                                                                                </Style>
+                                                                                                            </ListBox.ItemContainerStyle>
+                                                                                                            <ListBox.ItemTemplate>
+                                                                                                                <DataTemplate>
+                                                                                                                    <Grid>
+                                                                                                                        <TextBox Text="{Binding FileName}"
+                                                                         VerticalContentAlignment="Center"
+                                                                         BorderThickness="0" />
+                                                                                                                        <TextBox Text="{Binding FirewareFile }"
+                                                                         VerticalContentAlignment="Center"
+                                                                         BorderThickness="0"
+                                                                         Visibility="{Binding Path=DataContext.IsShowFirewareFullName, Mode=OneWay,Converter={StaticResource Bool2VisibilityConverter}, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                                                                                                    </Grid>
+                                                                                                                </DataTemplate>
+                                                                                                            </ListBox.ItemTemplate>
+                                                                                                        </ListBox>
+                                                                                                    </Border>
+                                                                                                </Grid>
+                                                                                            </Border>
+
+                                                                                            <Border Grid.Row="2"
+                                            Padding="5 0 5 10"
+                                            BorderThickness="0 0 0 2"
+                                            BorderBrush="{DynamicResource BgColor2}">
+                                                                                                <Grid>
+                                                                                                    <Grid.RowDefinitions>
+                                                                                                        <RowDefinition Height="auto" />
+                                                                                                        <RowDefinition Height="auto" />
+                                                                                                        <RowDefinition Height="*" />
+                                                                                                    </Grid.RowDefinitions>
+
+                                                                                                    <Border Margin="5">
+                                                                                                        <Grid>
+                                                                                                            <StackPanel Orientation="Horizontal"
+                                                                HorizontalAlignment="Left">
+                                                                                                                <TextBlock Text="&#xe64d;"
+                                                                   FontFamily="{StaticResource IconFontFamily}" />
+                                                                                                                <TextBlock Text="SpiFlash配置"
+                                                                   Margin="5 0 0 0" />
+                                                                                                            </StackPanel>
+
+                                                                                                            <Border HorizontalAlignment="Right">
+                                                                                                                <StackPanel/>
+                                                                                                            </Border>
+                                                                                                        </Grid>
+                                                                                                    </Border>
+
+                                                                                                    <StackPanel Margin="5 0 5 10"
+                                                        Grid.Row="1"
+                                                        Orientation="Horizontal"
+                                                        HorizontalAlignment="Left">
+                                                                                                        <Border Grid.Row="1">
+                                                                                                            <StackPanel Orientation="Horizontal"
+                                                                VerticalAlignment="Center" />
+                                                                                                        </Border>
+                                                                                                    </StackPanel>
+
+
+                                                                                                    <StackPanel Orientation="Vertical"
+                                                        Grid.Row="2">
+                                                                                                        <GroupBox Header="Crystal Frequency"
+                                                          Padding="0 10">
+                                                                                                            <ListBox Style="{StaticResource ListBoxBaseStyle}"
+                                                             IsEnabled="{Binding IsAllAvailable}"
+                                                             SelectedItem="{Binding CrystalFrequency}"
+                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.CrystalFrequencyList}}">
+                                                                                                                <ListBox.ItemTemplate>
+                                                                                                                    <DataTemplate>
+                                                                                                                        <TextBlock Text="{Binding}" />
+                                                                                                                    </DataTemplate>
+                                                                                                                </ListBox.ItemTemplate>
+                                                                                                                <ListBox.ItemContainerStyle>
+                                                                                                                    <Style TargetType="ListBoxItem">
+                                                                                                                        <Setter Property="Template">
+                                                                                                                            <Setter.Value>
+                                                                                                                                <ControlTemplate TargetType="ListBoxItem">
+                                                                                                                                    <Grid Margin="5 0"
+                                                                                  Width="80">
+                                                                                                                                        <RadioButton Cursor="Hand"
+                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
+                                                                                             GroupName="CrystalFrequencyList">
+                                                                                                                                            <ContentPresenter />
+                                                                                                                                        </RadioButton>
+                                                                                                                                    </Grid>
+                                                                                                                                </ControlTemplate>
+                                                                                                                            </Setter.Value>
+                                                                                                                        </Setter>
+                                                                                                                    </Style>
+                                                                                                                </ListBox.ItemContainerStyle>
+                                                                                                            </ListBox>
+                                                                                                        </GroupBox>
+                                                                                                        <GroupBox Header="Spi Mode"
+                                                          Padding="0 10">
+                                                                                                            <ListBox Style="{StaticResource ListBoxBaseStyle}"
+                                                             SelectedItem="{Binding SpiMode,Mode=TwoWay}"
+                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.SpiModeList}}">
+                                                                                                                <ListBox.ItemTemplate>
+                                                                                                                    <DataTemplate>
+                                                                                                                        <TextBlock Text="{Binding}" />
+                                                                                                                    </DataTemplate>
+                                                                                                                </ListBox.ItemTemplate>
+                                                                                                                <ListBox.ItemContainerStyle>
+                                                                                                                    <Style TargetType="ListBoxItem">
+                                                                                                                        <Setter Property="Template">
+                                                                                                                            <Setter.Value>
+                                                                                                                                <ControlTemplate TargetType="ListBoxItem">
+                                                                                                                                    <Grid Margin="5 0"
+                                                                                  Width="80">
+                                                                                                                                        <RadioButton Cursor="Hand"
+                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
+                                                                                             GroupName="SpiModeList">
+                                                                                                                                            <ContentPresenter />
+                                                                                                                                        </RadioButton>
+                                                                                                                                    </Grid>
+                                                                                                                                </ControlTemplate>
+                                                                                                                            </Setter.Value>
+                                                                                                                        </Setter>
+                                                                                                                    </Style>
+                                                                                                                </ListBox.ItemContainerStyle>
+                                                                                                            </ListBox>
+                                                                                                        </GroupBox>
+                                                                                                        <GroupBox Header="Spi Speed"
+                                                          Padding="0 10">
+                                                                                                            <ListBox Style="{StaticResource ListBoxBaseStyle}"
+                                                             SelectedItem="{Binding SpiSpeed}"
+                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.SpiSpeedList}}">
+                                                                                                                <ListBox.ItemTemplate>
+                                                                                                                    <DataTemplate>
+                                                                                                                        <TextBlock Text="{Binding}" />
+                                                                                                                    </DataTemplate>
+                                                                                                                </ListBox.ItemTemplate>
+                                                                                                                <ListBox.ItemContainerStyle>
+                                                                                                                    <Style TargetType="ListBoxItem">
+                                                                                                                        <Setter Property="Template">
+                                                                                                                            <Setter.Value>
+                                                                                                                                <ControlTemplate TargetType="ListBoxItem">
+                                                                                                                                    <Grid Margin="5 0"
+                                                                                  Width="80">
+                                                                                                                                        <RadioButton Cursor="Hand"
+                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
+                                                                                             GroupName="SpiSeedList">
+                                                                                                                                            <ContentPresenter />
+                                                                                                                                        </RadioButton>
+                                                                                                                                    </Grid>
+                                                                                                                                </ControlTemplate>
+                                                                                                                            </Setter.Value>
+                                                                                                                        </Setter>
+                                                                                                                    </Style>
+                                                                                                                </ListBox.ItemContainerStyle>
+                                                                                                            </ListBox>
+                                                                                                        </GroupBox>
+                                                                                                        <GroupBox Header="Flash Size"
+                                                          Padding="0 10">
+                                                                                                            <ListBox Style="{StaticResource ListBoxBaseStyle}"
+                                                             SelectedItem="{Binding FlashSize}"
+                                                             ItemsSource="{Binding Source={x:Static lh:EspFlashHelper.FlashSizeList}}">
+                                                                                                                <ListBox.ItemTemplate>
+                                                                                                                    <DataTemplate>
+                                                                                                                        <TextBlock Text="{Binding}" />
+                                                                                                                    </DataTemplate>
+                                                                                                                </ListBox.ItemTemplate>
+                                                                                                                <ListBox.ItemContainerStyle>
+                                                                                                                    <Style TargetType="ListBoxItem">
+                                                                                                                        <Setter Property="Template">
+                                                                                                                            <Setter.Value>
+                                                                                                                                <ControlTemplate TargetType="ListBoxItem">
+                                                                                                                                    <Grid Margin="5 0"
+                                                                                  Width="80">
+                                                                                                                                        <RadioButton Cursor="Hand"
+                                                                                             IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
+                                                                                             GroupName="FlashSizeList">
+                                                                                                                                            <ContentPresenter />
+                                                                                                                                        </RadioButton>
+                                                                                                                                    </Grid>
+                                                                                                                                </ControlTemplate>
+                                                                                                                            </Setter.Value>
+                                                                                                                        </Setter>
+                                                                                                                    </Style>
+                                                                                                                </ListBox.ItemContainerStyle>
+                                                                                                            </ListBox>
+                                                                                                        </GroupBox>
+                                                                                                    </StackPanel>
+                                                                                                </Grid>
+                                                                                            </Border>
+
+
+                                                                                        </Grid>
+                                                                                    </Border>
+                                                                                </Border>
+                                                                                <Border.Effect>
+                                                                                    <DropShadowEffect BlurRadius="6"
+                                                                                              ShadowDepth="-5"
+                                                                                              Color="{DynamicResource BoxShadowColor}"
+                                                                                              Opacity="0.4" />
+                                                                                </Border.Effect>
+
+                                                                            </Border>
+                                                                        </Border>
+                                                                    </Popup>
+                                                                </StackPanel>
+                                                            </Border>
+
+
+                                                        </Grid>
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Margin="0 15">
                                                             <StackPanel Orientation="Horizontal"
                                                                         Margin="5 5">
                                                                 <TextBlock Text="开始烧录信号  M" />
@@ -793,20 +702,20 @@
                                                                          VerticalContentAlignment="Center"
                                                                          TextAlignment="Center" />
                                                             </StackPanel>
-
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal"
-                                                                    DockPanel.Dock="Bottom">
+                                                            <Button cal:Message.Attach="ImportFirewareAction" Content="导入固件" Margin="25 0 0 0"/>
+                                                            <Button Content="保存配置" Margin="10 0 0 0" cal:Message.Attach="RestoreConfig" />
+                                                    </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0 10">
                                                             <Button Content="开始自动烧录"
                                                                     IsEnabled="{Binding IsAutoFlashing, Converter={StaticResource ReverseBoolConverter}}"
                                                                     cal:Message.Attach="StartAutoFlash" />
                                                             <Button Content="停止自动烧录"
-                                                                    Margin="5 0 0 0"
+                                                                    Margin="20 0 0 0"
                                                                     IsEnabled="{Binding IsAutoFlashing}"
                                                                     cal:Message.Attach="StopAutoFlash" />
                                                             <TextBlock Text="&#xe8fc;"
                                                                        FontSize="18"
-                                                                       Margin="10 0 5 0"
+                                                                       Margin="20 0 5 0"
                                                                        VerticalAlignment="Center"
                                                                        RenderTransformOrigin=".5 .5"
                                                                        FontFamily="{StaticResource IconFontFamily}">
@@ -841,15 +750,15 @@
                                                             <TextBlock Margin="5 0 0 0"
                                                                        Text="{Binding AutoState}" />
                                                         </StackPanel>
-                                                    </DockPanel>
+                                                    </StackPanel>
+
+
                                                 </Border>
 
                                             </Grid>
                                         </Border>
 
-                                        <Border Grid.Column="0"
-                                                Grid.ColumnSpan="2"
-                                                Grid.Row="1"
+                                        <Border Grid.Row="1"
                                                 Margin="0 5">
                                             <Grid>
                                                 <StackPanel Orientation="Horizontal"
@@ -935,8 +844,8 @@
                                                                         HorizontalAlignment="Stretch"
                                                                         CornerRadius="4"
                                                                         Padding="5"
-                                                                        MaxWidth="460"
-                                                                        Height="240"
+                                                                        Width="500"
+                                                                        Height="270"
                                                                         BorderBrush="{DynamicResource ColorGray4}"
                                                                         BorderThickness="2">
                                                                     <Grid>
@@ -981,17 +890,8 @@
                                                                                                Grid.Row="1" />
                                                                                 </StackPanel>
                                                                             </Grid>
-                                                                            <StackPanel>
-                                                                                <!--<StackPanel Orientation="Horizontal"
-                                                                                            Margin="5"
-                                                                                            Width="225">
-                                                                                    <TextBlock Text="串口号"
-                                                                                               Margin="5 5 20 5" />
-                                                                                    <ComboBox Width="150"
-                                                                                              SelectedItem="{Binding ComPortName}"
-                                                                                              ItemsSource="{Binding DataContext.AvailablePorts, RelativeSource={RelativeSource AncestorType=Window}}" />
-                                                                                </StackPanel>-->
-                                                                                <StackPanel Orientation="Horizontal"
+                                                                        <StackPanel>
+                                                                            <StackPanel Orientation="Horizontal"
                                                                                             Margin="5"
                                                                                             Width="225">
                                                                                     <TextBlock Text="{Binding ComPortName}"
@@ -999,10 +899,9 @@
                                                                                     <ComboBox Width="150"
                                                                                               SelectedValue="{Binding PortType}"
                                                                                               DisplayMemberPath="Key"
-                                                                                              
                                                                                               SelectedValuePath="Value"
                                                                                               ItemsSource="{Binding Source={x:Static lh:AutoFlashHelper.RecordTypes}}"/>
-                                                                                    
+
                                                                                 </StackPanel>
                                                                                 <StackPanel Orientation="Horizontal"
                                                                                             Margin="5">
@@ -1030,7 +929,8 @@
                                                                                 </StackPanel>
                                                                             </StackPanel>
                                                                             <StackPanel Orientation="Vertical"
-                                                                                        HorizontalAlignment="Right">
+                                                                                        HorizontalAlignment="Right"
+                                                                                        IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.IsAutoFlashing, Converter={StaticResource ReverseBoolConverter}}">
                                                                                 <Button Width="100"
                                                                                         Margin="5 0 0 2"
                                                                                         Style="{StaticResource PrimaryButtonStyle}"
@@ -1070,9 +970,10 @@
                                                                                      Minimum="0"
                                                                                      Margin="5 0"
                                                                                      Value="{Binding Progress}"
-                                                                                     Height="8">
+                                                                                     Height="15">
                                                                         </ProgressBar>
                                                                         <TextBox Grid.Row="3"
+                                                                                 Height="80"
                                                                                  Text="{Binding Logs}"
                                                                                  TextWrapping="WrapWithOverflow"
                                                                                  HorizontalScrollBarVisibility="Disabled"
@@ -1098,8 +999,6 @@
                                 </Border>
                             </Grid>
                         </Border>
-                    </Grid>
-
                 </Border>
             </Grid>
 

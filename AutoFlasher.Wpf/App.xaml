@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <hc:ThemeResources/>
+                <hc:ThemeResources AccentColor="DarkOrange"/>
                 <hc:Theme/>
                 <ResourceDictionary>
                     <local:Bootstrapper x:Key="AppBootstrapper"/>

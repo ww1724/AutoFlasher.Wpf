@@ -10,8 +10,8 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="ShellView"
-        Height="860"
-        Width="900">
+        Height="600"
+        Width="1024">
 
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="4"
@@ -226,9 +226,7 @@
                                                                                 <Border Grid.Column="0"
                                 IsEnabled="{Binding IsAllAvailable}"
                                 Padding="0">
-                                                                                    <Border Background="{DynamicResource ColorGrayA}"
-                                    BorderBrush="{DynamicResource BgColor3}"
-                                    BorderThickness="0 0 2 0">
+                                                                                    <Border Background="{DynamicResource ColorGrayA}">
 
 
                                                                                         <Grid>
@@ -309,7 +307,7 @@
 
                                                                                                             <Border HorizontalAlignment="Right">
                                                                                                                 <StackPanel>
-                                                                                                                    <CheckBox x:Name="FirewareAdvanceConfigBtn1"
+                                                                                                                    <CheckBox x:Name="FirewareAdvanceConfigBtn"
                                                                       Content="&#xe653;"
                                                                       Background="Transparent"
                                                                       VerticalAlignment="Stretch"

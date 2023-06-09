@@ -891,6 +891,8 @@ namespace AutoFlasher.Wpf.ViewModels
             await Task.Run(() =>
             {
                 AutoFlashThreadSequence();
+                if (PlcPort.IsOpen)
+                    PlcPort.Close();
             });
         }
 

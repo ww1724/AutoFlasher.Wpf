@@ -911,7 +911,7 @@ namespace AutoFlasher.Wpf.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show("读取PLC错误, 检查PLC通讯线以及PLC串口选择配置");
                         LoggerService.Error(ex.Message);
                         AutoState = AutoFlashState.Idle;
                         IsAutoFlashing = false;
